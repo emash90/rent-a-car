@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
 import Image from '../assets/signup-image.jpg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { Auth } from 'aws-amplify'
 
 const RegisterComponent = () => {
+    const navigate = useNavigate()
     const [registerData, setRegisterData] = useState({
         first_name: '',
         surname: '',
@@ -21,6 +23,26 @@ const RegisterComponent = () => {
         if (password !== re_password) {
             console.log("passwords do not match")
             return
+        }
+        try {
+            const user = await Auth.signUp({
+                username: email,
+                password,
+                attributes: {
+                    email,          // optional
+                    // other custom attributes 
+                }
+            });
+            if (user) {
+                navigate('/confirm')
+                toast.success("enter confirmation code")
+            } else {
+                toast.error("Registration Failed")
+            }
+        } catch (error) {
+            console.log('error signing in', error);
+            toast.error("Registration Failed")
+            
         }
     }
 

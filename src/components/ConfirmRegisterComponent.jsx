@@ -1,24 +1,24 @@
-import React, {useState} from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
 import image from '../assets/signin-image.jpg'
+import { Link, useNavigate } from 'react-router-dom'
 import { Auth } from 'aws-amplify'
 import { toast } from 'react-toastify';
 
-const LoginComponent = () => {
+const ConfirmRegisterComponent = () => {
     const navigate = useNavigate()
-    const [loginData, setLoginData] = useState({
+    const [confirmData, setConfirmData] = useState({
         email: '',
-        password: ''
+        code: ''
     })
-    const {email, password} = loginData
-    const get_login_data = (e) => {
-        setLoginData({...loginData, [e.target.name]: e.target.value})
+    const {email, code} = confirmData
+    const get_confirm_data = (e) => {
+        setConfirmData({...confirmData, [e.target.name]: e.target.value})
     }
-    const submit_login_data = async (e) => {
+    const submit_confirm_data = async (e) => {
         e.preventDefault()
-        console.log("login data", loginData)
+        console.log("confirm data", confirmData)
         try {
-            const user = await Auth.signIn(email, password);
+            const user = await Auth.confirmSignUp(email, code);
             if (user) {
                 navigate('/')
                 toast.success("successfull login")              
@@ -40,22 +40,22 @@ const LoginComponent = () => {
                     </div>
 
                     <div class="signin-form">
-                        <h2 class="form-title">Sign-in</h2>
+                        <h2 class="form-title">Confirm Sign-up</h2>
                         <form method="POST" class="register-form" id="login-form">
                             <div class="form-group">
                                 <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="email" value={email} placeholder="Your Email" onChange={get_login_data}/>
+                                <input type="text" name="email" value={email} placeholder="Your Email" onChange={get_confirm_data}/>
                             </div>
                             <div class="form-group">
                                 <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="password" placeholder="Password" value={password} onChange={get_login_data}/>
+                                <input type="text" name="code" value={code} placeholder="enter confirmation code" onChange={get_confirm_data} />
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
                                 <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
                             </div>
                             <div class="form-group form-button">
-                                <input type="submit" onClick={submit_login_data} class="form-submit" />
+                                <input type="submit" onClick={submit_confirm_data} class="form-submit" />
                             </div>
                         </form>
                         <div class="social-login">
@@ -66,7 +66,7 @@ const LoginComponent = () => {
             </div>
         </section>
     </>
-    )
+  )
 }
 
-export default LoginComponent
+export default ConfirmRegisterComponent
