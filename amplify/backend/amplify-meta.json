@@ -1,0 +1,58 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplify7b3a3ce198384-staging-122615-authRole",
+      "UnauthRoleArn": "arn:aws:iam::255287995451:role/amplify-amplify7b3a3ce198384-staging-122615-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::255287995451:role/amplify-amplify7b3a3ce198384-staging-122615-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-amplify7b3a3ce198384-staging-122615-deployment",
+      "UnauthRoleName": "amplify-amplify7b3a3ce198384-staging-122615-unauthRole",
+      "StackName": "amplify-amplify7b3a3ce198384-staging-122615",
+      "StackId": "arn:aws:cloudformation:us-east-1:255287995451:stack/amplify-amplify7b3a3ce198384-staging-122615/dee17fb0-6a8c-11ee-a5df-12d457cbab57",
+      "AmplifyAppId": "d4p82f8yy8ahh"
+    }
+  },
+  "auth": {
+    "rentacare77ba41f": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify7b3a3ce198384-staging-122615-deployment/amplify-cfn-templates/auth/rentacare77ba41f-cloudformation-template.json",
+        "logicalId": "authrentacare77ba41f"
+      },
+      "lastPushTimeStamp": "2023-10-14T19:26:28.510Z",
+      "output": {
+        "UserPoolId": "us-east-1_b5QuZkZyd",
+        "AppClientIDWeb": "73q73tqautdkccqca1u8tv21jh",
+        "AppClientID": "2lvf4vof2km9o5og07gopji6h2",
+        "IdentityPoolId": "us-east-1:552e7eb2-2a62-4a32-9c3c-ef8a1cb67365",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:255287995451:userpool/us-east-1_b5QuZkZyd",
+        "IdentityPoolName": "rentacare77ba41f_identitypool_e77ba41f__staging",
+        "UserPoolName": "rentacare77ba41f_userpool_e77ba41f"
+      },
+      "lastPushDirHash": "sIibhXjwtXHkq8xYJ/V0eueT0Es="
+    }
+  }
+}
