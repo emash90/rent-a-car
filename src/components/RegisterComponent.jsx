@@ -13,18 +13,15 @@ const RegisterComponent = () => {
         password: '',
         re_password: ''
     })
-    const [loading, setLoading] = useState(false)
     const {first_name, surname, email, password, re_password} = registerData
     const get_register_data = (e) => {
         setRegisterData({...registerData, [e.target.name]: e.target.value})
     }
     const submit_register_data = async (e) => {
         e.preventDefault()
-        setLoading(true)
         console.log("register data", registerData)
         //check if passwords match
         if (password !== re_password) {
-            setLoading(false)
             console.log("passwords do not match")
             toast.error("passwords do not match")
             return
@@ -39,18 +36,15 @@ const RegisterComponent = () => {
                 }
             });
             if (user) {
-                setLoading(false)
                 navigate('/confirm')
                 //delay 2 seconds to show the toast message
                 setTimeout(() => {
                     toast.success("Enter the confirmation code sent to your email")
                 }, 2000);
             } else {
-                setLoading(false)
                 toast.error("Registration Failed")
             }
         } catch (error) {
-            setLoading(false)
             console.log('error signing in', error);
             toast.error("Registration Failed")
             
@@ -93,7 +87,7 @@ const RegisterComponent = () => {
                                 <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
                             </div>
                             <div class="form-group form-button">
-                                {loading ? <button type="button" class="form-submit" disabled>Signing up...</button> : <button type="button" class="form-submit" onClick={submit_register_data}>Register</button>}
+                                <input type="submit" class="form-submit" onClick={submit_register_data} />
                             </div>
                         </form>
                     </div>
