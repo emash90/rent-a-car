@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfirmRegister from './pages/ConfirmRegister'
 import Dashboard from './pages/Dashboard'
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 
