@@ -1,10 +1,10 @@
 import React from 'react'
 import ConfirmRegisterComponent from '../components/ConfirmRegisterComponent'
 
-const ConfirmRegister = () => {
+const ConfirmRegister = ({ user }) => {
   return (
     <div>
-      <ConfirmRegisterComponent />
+      <ConfirmRegisterComponent user={user} />
     </div>
   )
 }
