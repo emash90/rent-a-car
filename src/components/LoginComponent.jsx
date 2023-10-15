@@ -10,22 +10,26 @@ const LoginComponent = () => {
         email: '',
         password: ''
     })
+    const [loading, setLoading] = useState(false)
     const {email, password} = loginData
     const get_login_data = (e) => {
         setLoginData({...loginData, [e.target.name]: e.target.value})
     }
     const submit_login_data = async (e) => {
         e.preventDefault()
-        console.log("login data", loginData)
+        setLoading(true)
         try {
             const user = await Auth.signIn(email, password);
             if (user) {
+                setLoading(false)
                 navigate('/')
                 toast.success("successfull login")              
             } else {
+                setLoading(false)
                 toast.error("Login Failed")
             }
         } catch (error) {
+            setLoading(false)
             console.log('error signing in', error);
             toast.error("Login Failed")
         }
@@ -55,7 +59,7 @@ const LoginComponent = () => {
                                 <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
                             </div>
                             <div class="form-group form-button">
-                                <input type="submit" onClick={submit_login_data} class="form-submit" />
+                                {loading ? <button type="button" class="form-submit" disabled>Signing in...</button> : <button type="button" class="form-submit" onClick={submit_login_data}>Sign in</button>}
                             </div>
                         </form>
                         <div class="social-login">
