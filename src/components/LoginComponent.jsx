@@ -57,6 +57,9 @@ const LoginComponent = () => {
                             <div class="form-group form-button">
                                 <input type="submit" onClick={submit_login_data} class="form-submit" />
                             </div>
+                            <div class="form-group">
+                                <Link to="/forgot-password">Forgot Password</Link>
+                            </div>
                         </form>
                         <div class="social-login">
                             <span class="social-label"> Don't have an account?  <Link to="/register">Sign up</Link></span>

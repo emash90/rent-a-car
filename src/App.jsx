@@ -10,6 +10,9 @@ import Dashboard from './pages/Dashboard'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Hub } from 'aws-amplify'
+import AllPackages from './pages/AllPackages'
+import PackageCreate from './pages/PackageCreate'
+import ResetPassword from './pages/ResetPassword'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -47,6 +50,9 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/confirm" element={<ConfirmRegister user={user} />} />
         <Route path="/" element={<Dashboard />} />
+        <Route path="/packages" element={<AllPackages />} />
+        <Route path="/create-package" element={<PackageCreate />} />
+        <Route path="/forgot-password" element={<ResetPassword />} />
       </Routes>
       <ToastContainer />
     </div>
