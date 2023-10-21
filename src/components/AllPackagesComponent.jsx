@@ -14,11 +14,7 @@ const AllPackagesComponent = () => {
       setLoading(true);
       try {
         const user = await Auth.currentAuthenticatedUser();
-        const data = await API.get('package', '/packages', {
-          queryStringParameters: {
-            user_id: user.attributes.sub,
-          },
-        });
+        const data = await API.get('package', '/packages');
         setPackages(data);
         setLoading(false);
       } catch (error) {
@@ -30,11 +26,18 @@ const AllPackagesComponent = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div className='main_page'>
+        <p>Loading...</p>
+      </div>
+    )
   }
 
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return (
+      <div className='main_page'>
+        <p>Error: {error.message}</p>
+    </div>)
   }
 
   return (
