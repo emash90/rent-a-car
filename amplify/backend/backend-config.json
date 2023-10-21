@@ -8,7 +8,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "packagesLambdaFunction"
+          "resourceName": "packagesLambda"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -81,25 +81,6 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
-    },
-    "packagesLambdaFunction": {
-      "build": true,
-      "dependsOn": [
-        {
-          "attributeEnvMap": {
-            "Arn": "TABLE_ARN",
-            "Name": "TABLE_NAME"
-          },
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "storage",
-          "resourceName": "packages"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
     }
   },
   "parameters": {
@@ -137,10 +118,6 @@
     }
   },
   "storage": {
-    "packages": {
-      "providerPlugin": "awscloudformation",
-      "service": "DynamoDB"
-    },
     "packagesTable": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"
