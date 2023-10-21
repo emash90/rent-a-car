@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "paths": {
+    "/packages": {
+      "name": "/packages",
+      "lambdaFunction": "packagesLambda",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}

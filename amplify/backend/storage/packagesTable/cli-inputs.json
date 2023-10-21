@@ -1,0 +1,14 @@
+{
+  "resourceName": "packagesTable",
+  "tableName": "packagesTable",
+  "partitionKey": {
+    "fieldName": "receiver_number",
+    "fieldType": "string"
+  },
+  "sortKey": {
+    "fieldName": "package_from",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}
