@@ -25,6 +25,13 @@ export type AmplifyDependentResourcesAttributes = {
       "Name": "string",
       "Region": "string"
     },
+    "packageLambdaFunction": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "packagesLambda": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
@@ -34,6 +41,16 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "storage": {
+    "packages": {
+      "Arn": "string",
+      "Name": "string",
+      "PartitionKeyName": "string",
+      "PartitionKeyType": "string",
+      "Region": "string",
+      "SortKeyName": "string",
+      "SortKeyType": "string",
+      "StreamArn": "string"
+    },
     "packagesTable": {
       "Arn": "string",
       "Name": "string",

@@ -25,10 +25,15 @@
           "deploymentBucketName": "amplify-amplify7b3a3ce198384-staging-122615-deployment",
           "s3Key": "amplify-builds/packagesLambda-4e3358714a5766416f77-build.zip"
         },
-        "packagesLambdaFunction": {}
+        "packagesLambdaFunction": {},
+        "packageLambdaFunction": {
+          "deploymentBucketName": "amplify-amplify7b3a3ce198384-staging-122615-deployment",
+          "s3Key": "amplify-builds/packageLambdaFunction-7a4e342f725441344969-build.zip"
+        }
       },
       "storage": {
-        "packagesTable": {}
+        "packagesTable": {},
+        "packages": {}
       },
       "api": {
         "package": {}

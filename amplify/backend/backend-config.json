@@ -8,7 +8,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "packagesLambda"
+          "resourceName": "packageLambdaFunction"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -63,6 +63,25 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "packageLambdaFunction": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "packages"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "packagesLambda": {
       "build": true,
       "dependsOn": [
@@ -84,6 +103,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_packageLambdaFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "packageLambdaFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_packageLambdaFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "packageLambdaFunction"
+        }
+      ]
+    },
     "AMPLIFY_function_packageLambda_deploymentBucketName": {
       "usedBy": [
         {
@@ -118,6 +153,10 @@
     }
   },
   "storage": {
+    "packages": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
     "packagesTable": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"
