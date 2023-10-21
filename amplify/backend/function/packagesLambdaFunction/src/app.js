@@ -23,9 +23,9 @@ if (process.env.ENV && process.env.ENV !== "NONE") {
 }
 
 const userIdPresent = false; // TODO: update in case is required to use that definition
-const partitionKeyName = "receiver_number";
+const partitionKeyName = "user_id";
 const partitionKeyType = "S";
-const sortKeyName = "package_from";
+const sortKeyName = "package_name";
 const sortKeyType = "S";
 const hasSortKey = sortKeyName !== "";
 const path = "/packages";

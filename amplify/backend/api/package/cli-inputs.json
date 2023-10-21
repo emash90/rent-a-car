@@ -3,7 +3,7 @@
   "paths": {
     "/packages": {
       "name": "/packages",
-      "lambdaFunction": "packagesLambda",
+      "lambdaFunction": "packagesLambdaFunction",
       "permissions": {
         "setting": "private",
         "auth": [
