@@ -153,6 +153,11 @@
     }
   },
   "storage": {
+    "imagesBucket": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
+    },
     "packages": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"

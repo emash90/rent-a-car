@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { FloatingLabel, Form } from 'react-bootstrap'
-import { API, Auth } from 'aws-amplify'
+import { API, Auth, Storage } from 'aws-amplify'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 
 const CreatePackage = () => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
+    const [uploading, setUploading] = useState(false)
+    const [uploadSuccess, setUploadSuccess] = useState(false)
     const [packageData, setPackageData] = useState({
         package_name: '',
         package_description: '',
@@ -16,8 +18,8 @@ const CreatePackage = () => {
         package_to: '',
         sender_number: '',
         receiver_number: '',
-        package_weight: '',
-        package_photo: ''
+        package_weight: null,
+        package_photo: []
     })
     const handleChange = (e) => {
         setPackageData({
@@ -57,8 +59,8 @@ const CreatePackage = () => {
                             package_to: '',
                             sender_number: '',
                             receiver_number: '',
-                            package_weight: '',
-                            package_photo: ''
+                            package_weight: null,
+                            package_photo: []
                         })
                         setLoading(false)
                         navigate('/packages')
@@ -77,7 +79,27 @@ const CreatePackage = () => {
     }
 
     //upload the photo to S3
-    const handlephotos = async (e) => {}
+    const handlephotos = async (e) => {
+        setUploading(true)
+        const file = e.target.files[0]
+        try {
+            const result = await Storage.put(file.name, file, {
+                level: 'public',
+                contentType: 'image/png'
+            })
+            setPackageData((prevData) => ({
+                ...prevData,
+                package_photo: [...prevData.package_photo, result.key]
+            }));
+            setUploading(false)
+            setUploadSuccess(true)
+        } catch (error) {
+            console.log(error)
+            toast.error('Something went wrong')
+            setUploading(false)
+            setUploadSuccess(false)
+        }
+    }
 
   return (
     <div className='main_page'>
@@ -207,10 +229,11 @@ const CreatePackage = () => {
                         >
                             <Form.Control 
                                 type='file'
-                                name='package_photo'
-                                value={package_photo}
                                 onChange={handlephotos}
+                                accept='image/png'
                             />
+                            {uploading && <p>Uploading photo...</p>}
+                            {uploadSuccess && !uploading ? <p style={{color: 'green'}}>Photo uploaded successfully</p> : null}
                         </FloatingLabel>
                     </div>
                     <div className="col">
