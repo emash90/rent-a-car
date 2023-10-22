@@ -13,6 +13,7 @@ import { Hub } from 'aws-amplify'
 import AllPackages from './pages/AllPackages'
 import PackageCreate from './pages/PackageCreate'
 import ResetPassword from './pages/ResetPassword'
+import PackageDetailsPage from './pages/PackageDetailsPage'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -51,6 +52,7 @@ function App() {
         <Route path="/confirm" element={<ConfirmRegister user={user} />} />
         <Route path="/" element={<Dashboard />} />
         <Route path="/packages" element={<AllPackages />} />
+        <Route path="/packages/details" element={<PackageDetailsPage />} />
         <Route path="/create-package" element={<PackageCreate />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
       </Routes>

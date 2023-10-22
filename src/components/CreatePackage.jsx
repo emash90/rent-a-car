@@ -15,7 +15,9 @@ const CreatePackage = () => {
         receiver_name: '',
         package_to: '',
         sender_number: '',
-        receiver_number: ''
+        receiver_number: '',
+        package_weight: '',
+        package_photo: ''
     })
     const handleChange = (e) => {
         setPackageData({
@@ -24,7 +26,7 @@ const CreatePackage = () => {
         })
     }
     
-    const { package_name, package_description, sender_name, package_from, receiver_name, package_to, sender_number, receiver_number } = packageData
+    const { package_name, package_description, sender_name, package_from, receiver_name, package_to, sender_number, receiver_number, package_photo, package_weight } = packageData
 
     const handlePackageCreate = (e) => {
         e.preventDefault()
@@ -33,7 +35,7 @@ const CreatePackage = () => {
             toast.error('Please fill all the fields')
             return
         }
-        const data = { package_name, package_description, sender_name, package_from, receiver_name, package_to, sender_number, receiver_number }
+        const data = { package_name, package_description, sender_name, package_from, receiver_name, package_to, sender_number, receiver_number, package_photo, package_weight }
         //get the current user from the Auth
         Auth.currentAuthenticatedUser()
             .then(user => {
@@ -54,7 +56,9 @@ const CreatePackage = () => {
                             receiver_name: '',
                             package_to: '',
                             sender_number: '',
-                            receiver_number: ''
+                            receiver_number: '',
+                            package_weight: '',
+                            package_photo: ''
                         })
                         setLoading(false)
                         navigate('/packages')
@@ -71,6 +75,10 @@ const CreatePackage = () => {
                 setLoading(false)
             })
     }
+
+    //upload the photo to S3
+    const handlephotos = async (e) => {}
+
   return (
     <div className='main_page'>
       <h1 className='page-title'>Create Package</h1>
@@ -117,22 +125,6 @@ const CreatePackage = () => {
                     </div>
                     <div className="col">
                         <FloatingLabel
-                        controlId='floatingPackageFrom'
-                        label='Package From'
-                        className='mb-3 custom-floating-label'
-                        >
-                        <Form.Control 
-                            type='text'
-                            name='package_from'
-                            value={package_from}
-                            onChange={handleChange}
-                        />
-                        </FloatingLabel>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col">
-                        <FloatingLabel
                             controlId='floatingInput'
                             label='Receiver Name'
                             className='mb-3 custom-floating-label'
@@ -143,6 +135,22 @@ const CreatePackage = () => {
                                 value={receiver_name}
                                 onChange={handleChange}
                             />
+                        </FloatingLabel>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                        <FloatingLabel
+                        controlId='floatingPackageFrom'
+                        label='Package From'
+                        className='mb-3 custom-floating-label'
+                        >
+                        <Form.Control 
+                            type='text'
+                            name='package_from'
+                            value={package_from}
+                            onChange={handleChange}
+                        />
                         </FloatingLabel>
                     </div>
                     <div className="col">
@@ -185,6 +193,36 @@ const CreatePackage = () => {
                                 type='text'
                                 name='receiver_number'
                                 value={receiver_number}
+                                onChange={handleChange}
+                            />
+                        </FloatingLabel>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                        <FloatingLabel
+                            controlId='floatingInput'
+                            label='Package Photo'
+                            className='mb-3 custom-floating-label'
+                        >
+                            <Form.Control 
+                                type='file'
+                                name='package_photo'
+                                value={package_photo}
+                                onChange={handlephotos}
+                            />
+                        </FloatingLabel>
+                    </div>
+                    <div className="col">
+                        <FloatingLabel
+                            controlId='floatingInput'
+                            label='Package Weight (in kg)'
+                            className='mb-3 custom-floating-label'
+                        >
+                            <Form.Control 
+                                type='text'
+                                name='package_weight'
+                                value={package_weight}
                                 onChange={handleChange}
                             />
                         </FloatingLabel>

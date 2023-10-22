@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { API, Auth } from 'aws-amplify';
+import { useNavigate } from 'react-router-dom';
 
 const AllPackagesComponent = () => {
+  const navigate = useNavigate();
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -24,7 +26,6 @@ const AllPackagesComponent = () => {
     }
     fetchPackages();
   }, []);
-
   if (loading) {
     return (
       <div className='main_page'>
@@ -38,6 +39,14 @@ const AllPackagesComponent = () => {
       <div className='main_page'>
         <p>Error: {error.message}</p>
     </div>)
+  }
+  const handleDetails = async (data) => {
+    console.log('Details clicked', data);
+    //get details for one package
+    const user = await Auth.currentAuthenticatedUser();
+    const response = await API.get('package', `/packages/object/${data.user_id}/${data.package_name}`)
+    console.log(response);
+    navigate('/packages/details', { state: response });
   }
 
   return (
@@ -54,6 +63,7 @@ const AllPackagesComponent = () => {
               <th>Package From</th>
               <th>Receiver Name</th>
               <th>Package To</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -67,6 +77,9 @@ const AllPackagesComponent = () => {
                   <td>{item.package_from}</td>
                   <td>{item.receiver_name}</td>
                   <td>{item.package_to}</td>
+                  <td>
+                    <button className='btn btn-primary' onClick={e=>{handleDetails(item)}}>View</button>
+                  </td>
                 </tr>
               ))
             ) : (
