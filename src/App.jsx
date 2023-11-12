@@ -43,6 +43,11 @@ function App() {
         break
     }
   })
+//add a listener for api calls
+  const apiListener = (data) => {
+    console.log('api event', data)
+  }
+  Hub.listen('api', apiListener)
 
   return (
     <div className="App">
@@ -51,9 +56,9 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/confirm" element={<ConfirmRegister user={user} />} />
         <Route path="/" element={<Dashboard />} />
-        <Route path="/packages" element={<AllPackages />} />
-        <Route path="/packages/details" element={<PackageDetailsPage />} />
-        <Route path="/create-package" element={<PackageCreate />} />
+        <Route path="/cars" element={<AllPackages />} />
+        <Route path="/cars/details" element={<PackageDetailsPage />} />
+        <Route path="/add-car" element={<PackageCreate />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
       </Routes>
       <ToastContainer />

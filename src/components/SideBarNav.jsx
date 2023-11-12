@@ -7,10 +7,10 @@ const SideBarNav = () => {
         <div className="sidebar">
             <ul className="sidebar-nav">
                 <li className="sidebar-brand">
-                    <Link to="/packages">Packages</Link>
+                    <Link to="/cars">My Cars</Link>
                 </li>
                 <li>
-                    <Link to="/create-package">Create Package</Link>
+                    <Link to="/add-car">Add a Car</Link>
                 </li>
             </ul>
         </div>

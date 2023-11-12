@@ -1,0 +1,14 @@
+{
+  "resourceName": "cars",
+  "tableName": "carsTable",
+  "partitionKey": {
+    "fieldName": "make",
+    "fieldType": "string"
+  },
+  "sortKey": {
+    "fieldName": "num_of_pass",
+    "fieldType": "number"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

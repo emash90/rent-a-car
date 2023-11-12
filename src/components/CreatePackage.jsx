@@ -9,35 +9,37 @@ const CreatePackage = () => {
     const [loading, setLoading] = useState(false)
     const [uploading, setUploading] = useState(false)
     const [uploadSuccess, setUploadSuccess] = useState(false)
-    const [packageData, setPackageData] = useState({
-        package_name: '',
-        package_description: '',
-        sender_name: '',
-        package_from: '',
-        receiver_name: '',
-        package_to: '',
-        sender_number: '',
-        receiver_number: '',
-        package_weight: null,
-        package_photo: []
+    const [vehicleData, setVehicleData] = useState({
+        reg_number: '',
+        make: '',
+        model: '',
+        manufacture_year: '',
+        engine_rating: '',
+        num_of_pass: '',
+        vehicle_type: '',
+        fuel: '',
+        available: '',
+        vehicle_photo: []
     })
     const handleChange = (e) => {
-        setPackageData({
-            ...packageData,
-            [e.target.name]: e.target.value
-        })
-    }
+        const { name, value } = e.target;
+        setVehicleData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
     
-    const { package_name, package_description, sender_name, package_from, receiver_name, package_to, sender_number, receiver_number, package_photo, package_weight } = packageData
+    const { reg_number, make, model, manufacture_year, engine_rating, num_of_pass, vehicle_type, fuel, available, vehicle_photo } = vehicleData
 
     const handlePackageCreate = (e) => {
+        console.log("data", vehicleData)
         e.preventDefault()
         //check if all the fields are filled
-        if (!package_name || !package_description || !sender_name || !package_from || !receiver_name || !package_to || !sender_number || !receiver_number) {
+        if ( !reg_number || !make || !model || !manufacture_year || !engine_rating || !num_of_pass || !vehicle_type || !fuel || !available || !vehicle_photo ) {
             toast.error('Please fill all the fields')
             return
         }
-        const data = { package_name, package_description, sender_name, package_from, receiver_name, package_to, sender_number, receiver_number, package_photo, package_weight }
+        const data = { reg_number:  reg_number.replace(/\s/g, '').toUpperCase(), make, model, manufacture_year, engine_rating, num_of_pass: parseInt(num_of_pass), vehicle_type, fuel, available, vehicle_photo }
         //get the current user from the Auth
         Auth.currentAuthenticatedUser()
             .then(user => {
@@ -47,23 +49,22 @@ const CreatePackage = () => {
                 setLoading(true)
                 data['user_id'] = user.attributes.sub
                 //make the API call to create the package
-                API.post('package', '/packages', { body: data })
+                API.post('cars', '/vehicle', { body: data })
                     .then(response => {
                         toast.success('Package created successfully')
-                        setPackageData({
-                            package_name: '',
-                            package_description: '',
-                            sender_name: '',
-                            package_from: '',
-                            receiver_name: '',
-                            package_to: '',
-                            sender_number: '',
-                            receiver_number: '',
-                            package_weight: null,
-                            package_photo: []
+                        setVehicleData({
+                            make: '',
+                            model: '',
+                            manufacture_year: '',
+                            engine_rating: '',
+                            num_of_pass: '',
+                            vehicle_type: '',
+                            fuel: '',
+                            available: '',
+                            vehicle_photo: []
                         })
                         setLoading(false)
-                        navigate('/packages')
+                        navigate('/cars')
                     })
                     .catch(error => {
                         console.log(error)
@@ -87,9 +88,9 @@ const CreatePackage = () => {
                 level: 'public',
                 contentType: 'image/png'
             })
-            setPackageData((prevData) => ({
+            setVehicleData((prevData) => ({
                 ...prevData,
-                package_photo: [...prevData.package_photo, result.key]
+                vehicle_photo: [...prevData.vehicle_photo, result.key]
             }));
             setUploading(false)
             setUploadSuccess(true)
@@ -103,58 +104,84 @@ const CreatePackage = () => {
 
   return (
     <div className='main_page'>
-      <h1 className='page-title'>Create Package</h1>
+      <h1 className='page-title'>Add Car</h1>
         <div className='form-container'>
             <Form>
-                <FloatingLabel
-                    controlId='floatingInput'
-                    label='Package Name'
-                    className='mb-3'
+            <FloatingLabel
+                controlId='floatingInput'
+                label='Vehicle Reg. Number'
+                className='mb-3'
+            >
+                <Form.Control as="textarea" rows={3}
+                    name='reg_number'
+                    value={reg_number}
+                    onChange={handleChange}
+                
+                />
+            </FloatingLabel>
+            <FloatingLabel
+                controlId='floatingInput'
+                label='Vehicle Make'
+                className='mb-3'
+            >
+                <Form.Control 
+                    as="select"
+                    name='make'
+                    value={make}
+                    onChange={handleChange}
                 >
-                    <Form.Control 
-                        type='text'
-                        name='package_name'
-                        value={package_name}
-                        onChange={handleChange}
-                    />
-                </FloatingLabel>
-                <FloatingLabel
-                    controlId='floatingInput'
-                    label='Package Description'
-                    className='mb-3'
-                >
-                    <Form.Control as="textarea" rows={3}
-                        name='package_description'
-                        value={package_description}
-                        onChange={handleChange}
-                    
-                    />
-                </FloatingLabel>
+                    <option value=''>Select a make</option>
+                    <option value='toyota'>Toyota</option>
+                    <option value='nissan'>Nissan</option>
+                    <option value='honda'>Honda</option>
+                    <option value='mazda'>Mazda</option>
+                </Form.Control>
+            </FloatingLabel>
+            <FloatingLabel
+                controlId='floatingInput'
+                label='Vehicle Model'
+                className='mb-3'
+            >
+                <Form.Control as="textarea" rows={3}
+                    name='model'
+                    value={model}
+                    onChange={handleChange}
+                
+                />
+            </FloatingLabel>
                 <div className="row">
                     <div className="col">
                         <FloatingLabel
                         controlId='floatingSenderName'
-                        label='Sender Name'
+                        label='Manufacture Year'
                         className='mb-3 custom-floating-label'
                         >
-                        <Form.Control 
-                            type='text' 
-                            name='sender_name'
-                            value={sender_name}
-                            onChange={handleChange}
-                        />
+                            <Form.Control 
+                                as="select"
+                                name='manufacture_year'
+                                value={manufacture_year}
+                                onChange={handleChange}
+                            >
+                                <option value=''>Select a year</option>
+                                {/* Assuming you want a range of years, you can generate options dynamically */}
+                                {Array.from({ length: 10 }, (v, i) => new Date().getFullYear() - i).map((year) => (
+                                    <option key={year} value={year}>
+                                        {year}
+                                    </option>
+                                ))}
+                            </Form.Control>
                         </FloatingLabel>
                     </div>
                     <div className="col">
                         <FloatingLabel
                             controlId='floatingInput'
-                            label='Receiver Name'
+                            label='Engine Rating'
                             className='mb-3 custom-floating-label'
                         >
                             <Form.Control 
                                 type='text'
-                                name='receiver_name'
-                                value={receiver_name}
+                                name='engine_rating'
+                                value={engine_rating}
                                 onChange={handleChange}
                             />
                         </FloatingLabel>
@@ -164,13 +191,13 @@ const CreatePackage = () => {
                     <div className="col">
                         <FloatingLabel
                         controlId='floatingPackageFrom'
-                        label='Package From'
+                        label='Number of Passengers'
                         className='mb-3 custom-floating-label'
                         >
                         <Form.Control 
-                            type='text'
-                            name='package_from'
-                            value={package_from}
+                            type='number'
+                            name='num_of_pass'
+                            value={num_of_pass}
                             onChange={handleChange}
                         />
                         </FloatingLabel>
@@ -178,53 +205,70 @@ const CreatePackage = () => {
                     <div className="col">
                         <FloatingLabel
                             controlId='floatingInput'
-                            label='Package To'
+                            label='Vehicle Type'
                             className='mb-3 custom-floating-label'
                         >
                             <Form.Control 
-                                type='text'
-                                name='package_to'
-                                value={package_to}
+                                as="select"
+                                name='vehicle_type'
+                                value={vehicle_type}
                                 onChange={handleChange}
-                            />
+                            >
+                                <option value=''>Select a type</option>
+                                <option value='sedan'>Sedan (4 or less pass)</option>
+                                <option value='suv'>SUV (more than 5 pass but less than 7)</option>
+                                <option value='van'>Van (more than 7 but less than 14 pass)</option>
+                                <option value='bus'>Bus (more than 14 but less than 33 pass)</option>
+                                <option value='truck'>Truck (pick-up or lorry) </option>
+                            </Form.Control>
                         </FloatingLabel>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col">
-                        <FloatingLabel
-                            controlId='floatingInput'
-                            label='Sender Number'
-                            className='mb-3 custom-floating-label'
+                    <FloatingLabel
+                        controlId='floatingInput'
+                        label='Fuel Type'
+                        className='mb-3 custom-floating-label'
+                    >
+                        <Form.Control 
+                            as="select"
+                            name='fuel'
+                            value={fuel}
+                            onChange={handleChange}
                         >
-                            <Form.Control 
-                                type='text'
-                                name='sender_number'
-                                value={sender_number}
-                                onChange={handleChange}
-                            />
-                        </FloatingLabel>
+                            <option value=''>Select a fuel type</option>
+                            <option value='petrol'>Petrol</option>
+                            <option value='diesel'>Diesel</option>
+                            <option value='hybrid'>Hybrid</option>
+                        </Form.Control>
+                    </FloatingLabel>
                     </div>
                     <div className="col">
                         <FloatingLabel
                             controlId='floatingInput'
-                            label='Receiver Number'
+                            label='Available'
                             className='mb-3 custom-floating-label'
                         >
                             <Form.Control 
-                                type='text'
-                                name='receiver_number'
-                                value={receiver_number}
+                                as="select"
+                                name='available'
+                                value={available}
                                 onChange={handleChange}
-                            />
+                            >
+                                <option value=''>Select an option</option>
+                                <option value='no'>No</option>
+                                <option value='yes'>Yes</option>
+                            </Form.Control>
                         </FloatingLabel>
                     </div>
+
                 </div>
                 <div className="row">
                     <div className="col">
                         <FloatingLabel
                             controlId='floatingInput'
-                            label='Package Photo'
+                            label='Vehicle Photos'
                             className='mb-3 custom-floating-label'
                         >
                             <Form.Control 
@@ -236,23 +280,9 @@ const CreatePackage = () => {
                             {uploadSuccess && !uploading ? <p style={{color: 'green'}}>Photo uploaded successfully</p> : null}
                         </FloatingLabel>
                     </div>
-                    <div className="col">
-                        <FloatingLabel
-                            controlId='floatingInput'
-                            label='Package Weight (in kg)'
-                            className='mb-3 custom-floating-label'
-                        >
-                            <Form.Control 
-                                type='text'
-                                name='package_weight'
-                                value={package_weight}
-                                onChange={handleChange}
-                            />
-                        </FloatingLabel>
-                    </div>
                 </div>
                 <button className='btn btn-primary' onClick={handlePackageCreate}>
-                    {loading ? 'Creating Package...' : 'Create Package'}
+                    {loading ? 'Adding car...' : 'Add Car'}
                 </button>
             </Form>
         </div>

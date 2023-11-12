@@ -29,15 +29,22 @@
         "packageLambdaFunction": {
           "deploymentBucketName": "amplify-amplify7b3a3ce198384-staging-122615-deployment",
           "s3Key": "amplify-builds/packageLambdaFunction-7a4e342f725441344969-build.zip"
+        },
+        "vehicleLambda": {
+          "deploymentBucketName": "amplify-amplify7b3a3ce198384-staging-122615-deployment",
+          "s3Key": "amplify-builds/vehicleLambda-6168342b333978686f74-build.zip"
         }
       },
       "storage": {
         "packagesTable": {},
         "packages": {},
-        "imagesBucket": {}
+        "imagesBucket": {},
+        "cars": {},
+        "vehicle": {}
       },
       "api": {
-        "package": {}
+        "package": {},
+        "cars": {}
       }
     }
   }

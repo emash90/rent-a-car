@@ -1,0 +1,14 @@
+{
+  "resourceName": "vehicle",
+  "tableName": "vehicleTable",
+  "partitionKey": {
+    "fieldName": "user_id",
+    "fieldType": "string"
+  },
+  "sortKey": {
+    "fieldName": "reg_number",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

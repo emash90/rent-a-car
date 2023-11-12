@@ -1,5 +1,19 @@
 {
   "api": {
+    "cars": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "vehicleLambda"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "package": {
       "dependsOn": [
         {
@@ -100,6 +114,25 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "vehicleLambda": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "vehicle"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -150,9 +183,29 @@
           "resourceName": "packagesLambda"
         }
       ]
+    },
+    "AMPLIFY_function_vehicleLambda_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "vehicleLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_vehicleLambda_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "vehicleLambda"
+        }
+      ]
     }
   },
   "storage": {
+    "cars": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
     "imagesBucket": {
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
@@ -163,6 +216,10 @@
       "service": "DynamoDB"
     },
     "packagesTable": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
+    "vehicle": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"
     }

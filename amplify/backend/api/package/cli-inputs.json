@@ -1,16 +1,11 @@
 {
   "version": 1,
   "paths": {
-    "/packages": {
-      "name": "/packages",
+    "/cars": {
+      "name": "/cars",
       "lambdaFunction": "packageLambdaFunction",
       "permissions": {
-        "setting": "private",
-        "auth": [
-          "create",
-          "update",
-          "delete"
-        ]
+        "setting": "open"
       }
     }
   }
