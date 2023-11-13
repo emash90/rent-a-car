@@ -13,7 +13,7 @@ const AvailableCarsComponent = () => {
             setLoading(true);
             try {
                 //get all cars
-                const data = await API.get('cars', '/vehicle/filter', {
+                const data = await API.get('cars', '/vehicle', {
                     // query parameters
                     queryStringParameters: {
                         make: 'toyota',
