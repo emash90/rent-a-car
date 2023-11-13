@@ -48,6 +48,13 @@ const CreatePackage = () => {
                 //add the user id to the data object
                 setLoading(true)
                 data['user_id'] = user.attributes.sub
+                //add the user details to the data object
+                data['user_details'] = {
+                    first_name: user.attributes.name,
+                    surname: user.attributes.family_name,
+                    email: user.attributes.email,
+                    phone_number: user.attributes.phone_number
+                }
                 //make the API call to create the package
                 API.post('cars', '/vehicle', { body: data })
                     .then(response => {

@@ -59,7 +59,7 @@ function App() {
         <Route path="/profile" element={<Dashboard user={user} />} />
         <Route path="/cars" element={<AllPackages />} />
         <Route path="/home" element={<AllPackages />} />
-        <Route path="/cars/details" element={<PackageDetailsPage />} />
+        <Route path="/cars/details" element={<PackageDetailsPage user={user} />} />
         <Route path="/add-car" element={<PackageCreate />} />
         <Route path="/forgot-password" element={<ResetPassword />} />
       </Routes>

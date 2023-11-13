@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { API, Auth } from 'aws-amplify';
+import { API, Storage, Auth } from 'aws-amplify';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+
 
 const AllPackagesComponent = () => {
   const navigate = useNavigate();
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const [photoUrls, setPhotoUrls] = useState([]);
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -24,37 +25,61 @@ const AllPackagesComponent = () => {
         setError(error);
         setLoading(false);
       }
-    }
+    };
+
     fetchCars();
   }, []);
+
+  const handleDetails = async (data) => {
+    const user = await Auth.currentAuthenticatedUser();
+    const response = await API.get('cars', `/vehicle/object/${data.user_id}/${data.reg_number}`);
+    navigate('/cars/details', { state: response });
+  };
+
+  const getPhotoUrl = async (key) => {
+    try {
+      const url = await Storage.get(key);
+      console.log("url now", url);
+      return url;
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  // Fetch photo URLs after cars are loaded
+  useEffect(() => {
+    const fetchPhotoUrls = async () => {
+      const urls = await Promise.all(cars.map((car) => getPhotoUrl(car.vehicle_photo[0])));
+      setPhotoUrls(urls);
+    };
+
+    if (cars.length > 0) {
+      fetchPhotoUrls();
+    }
+  }, [cars]);
+
   if (loading) {
     return (
       <div className='main_page'>
         <p>Loading...</p>
       </div>
-    )
+    );
   }
 
   if (error) {
     return (
       <div className='main_page'>
         <p>Error: {error.message}</p>
-    </div>)
+      </div>
+    );
   }
-  const handleDetails = async (data) => {
-    //get details for one package
-    const user = await Auth.currentAuthenticatedUser();
-    const response = await API.get('cars', `/vehicle/object/${data.user_id}/${data.reg_number}`);
-    navigate('/cars/details', { state: response });
-  }
-
   return (
     <div className='main_page'>
       <h1 className='page-title'>My Vehicles</h1>
       { cars && cars.length > 0 ? cars.map((car, index) => (
         <Card key={index} style={{ display: 'flex', flexDirection: 'row', marginBottom: '20px' }}>
-          <div style={{ width: '100px' }}>
-            <Card.Img src='https://picsum.photos/200/300' />
+          <div style={{ width: '200px' }}>
+            <Card.Img src={photoUrls[index]} style={{ width: '200px', height: '200px' }} />
           </div>
           <div style={{ width: '350px' }}>
             <Card.Body>
