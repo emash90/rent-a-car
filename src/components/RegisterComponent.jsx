@@ -11,19 +11,32 @@ const RegisterComponent = () => {
         surname: '',
         email: '',
         password: '',
-        re_password: ''
+        re_password: '',
+        user_type: ''
     })
-    const {first_name, surname, email, password, re_password} = registerData
+    const {first_name, surname, email, password, re_password, user_type} = registerData
     const get_register_data = (e) => {
         setRegisterData({...registerData, [e.target.name]: e.target.value})
     }
     const submit_register_data = async (e) => {
         e.preventDefault()
         console.log("register data", registerData)
+        //check if all fields are filled
+        if (first_name === '' || surname === '' || email === '' || password === '' || re_password === '') {
+            console.log("all fields are required")
+            toast.error("all fields are required")
+            return
+        }
         //check if passwords match
         if (password !== re_password) {
             console.log("passwords do not match")
             toast.error("passwords do not match")
+            return
+        }
+        //check if user type is selected
+        if (user_type === '') {
+            console.log("user type not selected")
+            toast.error("user type not selected")
             return
         }
         try {
@@ -31,8 +44,8 @@ const RegisterComponent = () => {
                 username: email,
                 password,
                 attributes: {
-                    email,          // optional
-                    // other custom attributes 
+                    email,
+                    'custom:user_type': user_type
                 }
             });
             if (user) {
@@ -82,10 +95,16 @@ const RegisterComponent = () => {
                                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
                                 <input type="password" name="re_password" value={re_password} placeholder="Repeat your password" onChange={get_register_data}/>
                             </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
-                            </div>
+                                <div class="form-group" style={{display: 'flex', flexDirection: 'column'  }}>
+                                    <div>
+                                        <input type="radio" name="user_type" id="user_type" value="client" class="agree-term" checked={user_type === 'client'} onChange={get_register_data}/>
+                                        <label for="user_type" class="label-agree-term">Client - I want to hire a car</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="user_type" id="user_type" value="merchant" class="agree-term" checked={user_type === 'merchant'} onChange={get_register_data}/>
+                                        <label for="user_type" class="label-agree-term">Merchant - I want to rent out my car</label>
+                                    </div>
+                                </div>
                             <div class="form-group form-button">
                                 <input type="submit" class="form-submit" onClick={submit_register_data} />
                             </div>

@@ -20,8 +20,13 @@ const LoginComponent = () => {
         try {
             const user = await Auth.signIn(email, password);
             if (user) {
-                navigate('/')
-                toast.success("successfull login")              
+                if (user.attributes['custom:user_type'] === 'client') {
+                    navigate('/home')
+                    toast.success("successfull login")
+                } else if (user.attributes['custom:user_type'] === 'merchant') {
+                    navigate('/cars')
+                    toast.success("successfull login")              
+                }
             } else {
                 toast.error("Login Failed")
             }

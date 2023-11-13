@@ -22,8 +22,8 @@ const ConfirmRegisterComponent = ({ user }) => {
         try {
             const user = await Auth.confirmSignUp(email, code);
             if (user) {
-                navigate('/')
-                toast.success(`welcome ${userEmail} you have successfully signed up`)    
+                navigate('/login')
+                toast.success(`Registered Successfully, you can now login`)    
             } else {
                 toast.error("sign up Failed")
             }

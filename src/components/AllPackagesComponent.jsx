@@ -11,7 +11,6 @@ const AllPackagesComponent = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  //get all the packages
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -19,7 +18,6 @@ const AllPackagesComponent = () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
         const data = await API.get('cars', '/vehicle');
-        console.log("Api called");
         setCars(data);
         setLoading(false);
       } catch (error) {
@@ -62,7 +60,7 @@ const AllPackagesComponent = () => {
             <Card.Body>
               <Card.Title>{car.make.toUpperCase()} <span>{car.model.toUpperCase()}</span></Card.Title>
               <Card.Text>
-                {car.available ? 'Available' : 'Not Available'}
+                {car.available === 'yes' ? 'Available' : 'Not Available'}
               </Card.Text>
             </Card.Body>
             <ListGroup className="list-group-flush">

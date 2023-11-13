@@ -55,8 +55,10 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/confirm" element={<ConfirmRegister user={user} />} />
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<Dashboard user={user} />} />
+        <Route path="/profile" element={<Dashboard user={user} />} />
         <Route path="/cars" element={<AllPackages />} />
+        <Route path="/home" element={<AllPackages />} />
         <Route path="/cars/details" element={<PackageDetailsPage />} />
         <Route path="/add-car" element={<PackageCreate />} />
         <Route path="/forgot-password" element={<ResetPassword />} />

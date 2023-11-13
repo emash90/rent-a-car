@@ -2,11 +2,10 @@ import React from 'react'
 import NavbarComponent from '../components/NavbarComponent'
 import SideBarNav from '../components/SideBarNav'
 
-const Dashboard = () => {
+const Dashboard = ({ user }) => {
   return (
     <div>
-      <NavbarComponent />
-      <SideBarNav />
+      <NavbarComponent user={user} />
     </div>
   )
 }

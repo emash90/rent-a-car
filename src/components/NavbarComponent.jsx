@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -10,6 +10,19 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const NavbarComponent = () => {
+    const [loggedInUser, setLoggedInUser] = useState('')
+    useEffect(() => {
+        const getUser = async () => {
+            try {
+                const user = await Auth.currentAuthenticatedUser()
+                setLoggedInUser(user.attributes.email)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getUser()
+    }, [])
+
     const navigate = useNavigate()
     const logout = () => {
        try {
@@ -25,20 +38,27 @@ const NavbarComponent = () => {
   return (
 <Navbar expand="lg" className="bg-body-tertiary">
   <Container>
-    <Navbar.Brand href="#home">LOGO</Navbar.Brand>
+    <Navbar.Brand href="/">LOGO</Navbar.Brand>
     <Nav className="mr-auto">
-      <Nav.Link href="#home">Home</Nav.Link>
-      <Nav.Link href="#link">Link</Nav.Link>
+      <Nav.Link href="/">Home</Nav.Link>
     </Nav>
-    <Nav>
-      <NavDropdown title='edwin' id="basic-nav-dropdown">
-        <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.2"></NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
-      </NavDropdown>
-    </Nav>
+    { loggedInUser ? (
+            <Nav>
+            <NavDropdown title={loggedInUser} id="basic-nav-dropdown">
+              <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2"></NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+        ) : (
+            <Nav>
+            <Nav.Link href="/login">Login</Nav.Link>
+            <Nav.Link href="/register">Register</Nav.Link>
+          </Nav>
+        )
+    }
   </Container>
 </Navbar>
 
